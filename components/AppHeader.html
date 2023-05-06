@@ -1,0 +1,40 @@
+<AppHeader>
+    <header>
+        <h1>Dreamy - __time__</h1>
+        <nav>
+            <a class="__test_active__" data-route="/" href="/"> Home </a>
+            <a class="__test_active__" data-route="/about" href="/about"> About </a>
+        </nav>
+    </header>
+</AppHeader>
+
+<script>
+    Tooling.addHelper("AppHeader", {
+        name: "time",
+        method(element, data)
+        {
+            const date = new Date();
+            const time = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+            return time;
+        }
+    });
+
+    Tooling.addHelper("nav a", {
+        name: "test_active",
+        method(element, data)
+        {
+            const windowRoute = window.location.pathname;
+
+            console.log(`Helper 'test_active' Testing route '${data.route}' against '${windowRoute}'`);
+
+            if (data.route === windowRoute)
+            {
+                return "active";
+            }
+
+            return "";
+        }
+    });
+
+    Tooling.runHelpers("nav a");
+</script>
