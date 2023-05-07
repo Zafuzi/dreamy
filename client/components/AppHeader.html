@@ -1,9 +1,9 @@
 <AppHeader>
     <header>
-        <h1>Dreamy - __time__</h1>
+        <h1>Dreamy - {{time}}</h1>
         <nav>
-            <a class="__test_active__" data-route="" href="/"> Home </a>
-            <a class="__test_active__" data-route="about" href="/about"> About </a>
+            <a class="{{test_active}}" data-route="" href="/"> Home </a>
+            <a class="{{test_active}}" data-route="about" href="/about"> About </a>
         </nav>
     </header>
 </AppHeader>
@@ -16,7 +16,7 @@
             const date = new Date();
             const time = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
             return time;
-        }
+        },
     });
 
     Tooling.addHelper("nav a", {

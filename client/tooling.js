@@ -9,7 +9,7 @@ const Tooling = {
                 element.helpers = {};
             }
 
-            element.helpers[helper.name] = helper.method;
+            element.helpers[helper.name] = helper;
         });
     },
     async runHelpers(selector) {
@@ -23,13 +23,22 @@ const Tooling = {
 
             // loop through all helpers
             for (const [name, helper] of Object.entries(helpers)) {
-                // call the helper assuming async
-                const result = await helper(element, element.dataset);
-                const elementHTML = element.outerHTML;
-                // replace the name of the helper called with the result
-                element.outerHTML = elementHTML.replace(`__${name}__`, result);
+
+                // store the OG element HTML for later
+                helper.originalHTML = element.outerHTML;
+                Tooling.runHelper(element, helper, name);
             }
         });
+    },
+    async runHelper(element, helper, name)
+    {
+        if(!helper.method) return;
+
+        // call the helper assuming async
+        const result = await helper.method(element, element.dataset);
+        const elementHTML = element.outerHTML;
+        // replace the name of the helper called with the result
+        element.outerHTML = elementHTML.replace(`{{${name}}}`, result);
     },
     async convertAllBlocks() {
         const blocks = Tooling.getAll("block");
@@ -40,7 +49,8 @@ const Tooling = {
                 const component = await fetch(`/components/${componentName}.html`, {
                     method: "GET",
                     headers: {
-                        "Content-Type": "text/html"
+                        "Content-Type": "text/html",
+                        "Accepts": "text/html"
                     }
                 }).then((response) => response.text());
 
