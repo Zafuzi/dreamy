@@ -2,8 +2,8 @@
     <header>
         <h1>Dreamy - __time__</h1>
         <nav>
-            <a class="__test_active__" data-route="/" href="/"> Home </a>
-            <a class="__test_active__" data-route="/about" href="/about"> About </a>
+            <a class="__test_active__" data-route="" href="/"> Home </a>
+            <a class="__test_active__" data-route="about" href="/about"> About </a>
         </nav>
     </header>
 </AppHeader>
@@ -25,9 +25,12 @@
         {
             const windowRoute = window.location.pathname;
 
-            console.log(`Helper 'test_active' Testing route '${data.route}' against '${windowRoute}'`);
+            // convert pathName to route
+            const route = windowRoute.split("/").filter((item) => item !== "").join("/");
 
-            if (data.route === windowRoute)
+            console.log(`Helper 'test_active' Testing route '${data.route}' against '${route}'`);
+
+            if (data.route === route)
             {
                 return "active";
             }
