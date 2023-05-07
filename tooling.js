@@ -37,7 +37,7 @@ const Tooling = {
         blocks.forEach(async (block) => {
             const componentName = block.id;
             try {
-                const component = await fetch(`components/${componentName}.html`, {
+                const component = await fetch(`/components/${componentName}.html`, {
                     method: "GET",
                     headers: {
                         "Content-Type": "text/html"
